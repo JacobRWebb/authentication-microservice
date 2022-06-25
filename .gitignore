@@ -1,4 +1,7 @@
 .env
+proto
+.vscode
+.DS_STORE
 
 # Binaries for programs and plugins
 *.exe

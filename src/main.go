@@ -5,6 +5,7 @@ import (
 	"net"
 
 	Auth "github.com/JacobRWebb/authentication-microservice/auth"
+	"github.com/JacobRWebb/authentication-microservice/database"
 	"google.golang.org/grpc"
 )
 
@@ -20,7 +21,7 @@ func main() {
 	grpcServer := grpc.NewServer()
 	Auth.AttachServer(grpcServer)
 
-	grpcServer.Serve(lis)
+	database.CreateDatabaseConnection()
 
 	if err := grpcServer.Serve(lis); err != nil {
 		fmt.Println("Error serving:", err.Error())

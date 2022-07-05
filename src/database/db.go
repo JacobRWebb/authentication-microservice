@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 
+	Auth "github.com/JacobRWebb/authentication-microservice/auth"
 	"github.com/JacobRWebb/authentication-microservice/util"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -15,6 +16,8 @@ func CreateDatabaseConnection() *gorm.DB {
 	if err != nil {
 		fmt.Println("Error connecting to database:", err.Error())
 	}
+
+	db.AutoMigrate(&Auth.User{})
 
 	return db;
 }

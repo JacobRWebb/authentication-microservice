@@ -7,12 +7,15 @@ import (
 	"github.com/JacobRWebb/authentication-microservice/pb/auth"
 )
 
+var count = 0
+
 type AuthServer struct {
 	auth.UnimplementedAuthServiceServer
 }
 
 func (s *AuthServer) Login(ctx context.Context, req *auth.LoginRequest) (*auth.LoginResponse, error) {
-	fmt.Println("Login request received")
+	count++
+	fmt.Println("Count:", count)
 	return &auth.LoginResponse{
 		Token: "12345",
 		Status: auth.ResponseStatus_OK,

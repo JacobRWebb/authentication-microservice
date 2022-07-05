@@ -4,12 +4,8 @@ import (
 	"fmt"
 	"net"
 
-	authserver "auth/auth"
-	"auth/proto"
-
+	Auth "github.com/JacobRWebb/authentication-microservice/auth"
 	"google.golang.org/grpc"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
 func main() {
@@ -21,18 +17,10 @@ func main() {
 		fmt.Println("Error listening:", err.Error())
 	}
 
-	dsn := "host=localhost user=postgres password=postgrespw dbname=XodiusAuth port=49153 sslmode=disable"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-
-	if err != nil {
-		fmt.Println("Error connecting to database:", err.Error())
-	}
-
-	db.Exec("")
-
-	as := authserver.AuthServer{}
 	grpcServer := grpc.NewServer()
-	proto.RegisterAuthServiceServer(grpcServer, &as)
+	Auth.AttachServer(grpcServer)
+
+	grpcServer.Serve(lis)
 
 	if err := grpcServer.Serve(lis); err != nil {
 		fmt.Println("Error serving:", err.Error())

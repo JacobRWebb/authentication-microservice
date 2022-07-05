@@ -1,26 +1,10 @@
-package authserver
+package Auth
 
 import (
-	"auth/proto"
-	"context"
-	"fmt"
+	"github.com/JacobRWebb/authentication-microservice/pb/auth"
+	"google.golang.org/grpc"
 )
 
-type AuthServer struct {
-	proto.UnimplementedAuthServiceServer
-}
-
-func (s *AuthServer) Login(ctx context.Context, req *proto.LoginRequest) (*proto.LoginResponse, error) {
-	fmt.Println("Login request received")
-	return &proto.LoginResponse{
-		Token: "12345",
-		Status: proto.ResponseStatus_OK,
-	}, nil
-}
-
-func (s *AuthServer) Register(ctx context.Context, req *proto.RegisterRequest) (*proto.RegisterResponse, error) {
-	fmt.Println("Register request received")
-	return &proto.RegisterResponse{
-		Status: proto.ResponseStatus_OK,
-	}, nil
+func AttachServer(grpcServer *grpc.Server) {
+	auth.RegisterAuthServiceServer(grpcServer, &AuthServer{})
 }

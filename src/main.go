@@ -18,6 +18,8 @@ func main() {
 		fmt.Println("Error listening:", err.Error())
 	}
 
+	database.DB = database.CreateDatabaseConnection()
+	
 	grpcServer := grpc.NewServer()
 	Auth.AttachServer(grpcServer)
 
